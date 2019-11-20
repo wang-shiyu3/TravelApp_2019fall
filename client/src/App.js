@@ -18,7 +18,7 @@ class App extends React.Component {
   };
 
   messageCallback = (e) => {
-    this.setState({ message: e.target.value });
+    this.setState({ message: e.target.value })
   };
   idToDeleteCallback = (e) => {
     this.setState({idToDelete: e.target.value})
@@ -125,27 +125,6 @@ class App extends React.Component {
         <AddTag data ={this.state.data} callback = {this.messageCallback} putDataToDB = {this.putDataToDB} />
         <DeleteTag callback = {this.idToDeleteCallback} deleteFromDB = {this.deleteFromDB} />
         <UpdateTag idToUpdateCallback = {this.idToUpdateCallback} updateToApplyCallback = {this.updateToApplyCallback} updateDB = {this.updateDB} />
-        {/* <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
-            placeholder="id of item to update here"
-          />
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="put new value of the item here"
-          />
-          <button
-            onClick={() =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }
-          >
-            UPDATE
-          </button>
-        </div> */}
       </div>
     );
   }
