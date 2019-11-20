@@ -1,17 +1,11 @@
-// import React, {Component} from 'react';
-
-// class App extends Component{
-//   render(){
-//     return <div>I'm ready to use the back end apis! :-)</div>
-//   }
-// }
-
-// export default App;
-
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
-
-class App extends Component {
+import IDList from './IDList.js'
+import AddTag from './AddTag.js'
+import DeleteTag from './DeleteTag.js';
+import UpdateTag from './UpdateTag.js'
+ 
+class App extends React.Component {
   // initialize our state
   state = {
     data: [],
@@ -22,6 +16,20 @@ class App extends Component {
     idToUpdate: null,
     objectToUpdate: null,
   };
+
+  messageCallback = (e) => {
+    this.setState({ message: e.target.value });
+  };
+  idToDeleteCallback = (e) => {
+    this.setState({idToDelete: e.target.value})
+  }
+  idToUpdateCallback = (e) => {
+    this.setState({idToUpdate: e.target.value})
+  }
+  updateToApplyCallback = (e) => {
+    this.setState({updateToApply: e.target.value})
+  }
+
 
   // when component mounts, first thing it does is fetch all existing data in our db
   // then we incorporate a polling logic so that we can easily see if our db has
@@ -77,7 +85,7 @@ class App extends Component {
     parseInt(idTodelete);
     let objIdToDelete = null;
     this.state.data.forEach((dat) => {
-      if (dat.id === idTodelete) {
+      if (dat.id == idTodelete) {
         objIdToDelete = dat._id;
       }
     });
@@ -95,7 +103,7 @@ class App extends Component {
     let objIdToUpdate = null;
     parseInt(idToUpdate);
     this.state.data.forEach((dat) => {
-      if (dat.id === idToUpdate) {
+      if (dat.id == idToUpdate) {
         objIdToUpdate = dat._id;
       }
     });
@@ -113,40 +121,11 @@ class App extends Component {
     const { data } = this.state;
     return (
       <div>
-        <ul>
-          {data.length <= 0
-            ? 'NO DB ENTRIES YET'
-            : data.map((dat) => (
-                <li style={{ padding: '10px' }} key={data.message}>
-                  <span style={{ color: 'gray' }}> id: </span> {dat.id} <br />
-                  <span style={{ color: 'gray' }}> data: </span>
-                  {dat.message}
-                </li>
-              ))}
-        </ul>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            onChange={(e) => this.setState({ message: e.target.value })}
-            placeholder="add something in the database"
-            style={{ width: '200px' }}
-          />
-          <button onClick={() => this.putDataToDB(this.state.message)}>
-            ADD
-          </button>
-        </div>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
-          />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE
-          </button>
-        </div>
-        <div style={{ padding: '10px' }}>
+        <IDList data = {data} />
+        <AddTag data ={this.state.data} callback = {this.messageCallback} putDataToDB = {this.putDataToDB} />
+        <DeleteTag callback = {this.idToDeleteCallback} deleteFromDB = {this.deleteFromDB} />
+        <UpdateTag idToUpdateCallback = {this.idToUpdateCallback} updateToApplyCallback = {this.updateToApplyCallback} updateDB = {this.updateDB} />
+        {/* <div style={{ padding: '10px' }}>
           <input
             type="text"
             style={{ width: '200px' }}
@@ -166,10 +145,11 @@ class App extends Component {
           >
             UPDATE
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }
 }
 
 export default App;
+
