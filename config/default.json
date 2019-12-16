@@ -1,0 +1,7 @@
+{
+  "mongoURI": "mongodb+srv://ray:webdesign@6150-hfitc.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "secret",
+  "adminSecret": "adminsecret",
+  "githubClientId": "",
+  "githubSecret": ""
+}
